@@ -402,17 +402,17 @@ return aho_corasick"
 -- session_period = 1800,
 -- <...>
 -- L4015
--- ["<STOCK_SITE_1>"] = {url = {"[?&]code=%u*(%d+)&?"}},
--- ["<STOCK_SITE_2>"] = {url = {"[?&]code=%u*(%d+)&?"}},
--- ["<STOCK_SITE_3>"] = {url = {"[?&]q=%u*(%d+)&?"}},
+-- ["gbapi.eastmoney.com"] = {url = {"[?&]code=%u*(%d+)&?"}},
+-- ["ai.10jqka.com.cn"] = {url = {"[?&]code=%u*(%d+)&?"}},
+-- ["www.iwencai.com"] = {url = {"[?&]q=%u*(%d+)&?"}},
 -- <...>
 -- L4019
--- ["<STOCK_SITE_4>"] = {url = {"[^/]/%u*(%d+)/?"}},
--- ["<STOCK_SITE_5>"] = {url = {"[^/]/%u*(%d+)/?"}},
+-- ["stockpage.10jqka.com.cn"] = {url = {"[^/]/%u*(%d+)/?"}},
+-- ["xueqiu.com"] = {url = {"[^/]/%u*(%d+)/?"}},
 -- <...>
 -- L4022
--- ["<STOCK_SITE_6>"] = {ref = {"[^/]/%a*(%d+).html"}},
--- ["<STOCK_SITE_7>"] = {ref = {"[^/]/%a*(%d+).html"}},
+-- ["quote.eastmoney.com"] = {ref = {"[^/]/%a*(%d+).html"}},
+-- ["myfavor.eastmoney.com"] = {ref = {"[^/]/%a*(%d+).html"}},
 -- <...>
 -- L4076
 -- tt.stock_code = dtype_value or ""

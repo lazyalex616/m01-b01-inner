@@ -1,4 +1,8 @@
+![电信光猫预装插件样本分析：m01-b01-inner](assets/banner.png)
+
 # `m01-b01-inner`：上海、浙江电信光猫插件样本
+
+这是电信光猫里预装的一个插件，能收集家里设备的清单和部分上网记录并上报，还能执行远程下发的命令。本仓库收录两地的 `init.bin` 原件、完整 Lua 源码和模块索引。
 
 上海电信和浙江电信的两台光猫搭载了不同版本的 `m01-b01-inner`。两版均以 `init.bin` 分发 Lua 源码，采用 zlib 压缩、AES-128-ECB 加密。
 
@@ -7,6 +11,32 @@
 | 上海 | 244,440 字节 | 1,151,589 字节 | 119 |
 | 浙江 | 141,160 字节 | 661,590 字节 | 90 |
 
+## 样本来源与收录范围
+
+两份样本均于 2026 年 11 月取自在用的电信光猫，各自的 `init.bin` 原件解密解压后，与插件运行时内存中的 Lua 文本逐字节一致。
+
+| 内容 | 是否收录 |
+|---|---|
+| 设备原件 `init.bin`、完整 Lua 文本 `init.lua` | 收录，保持原始字节。SHA-256 见 [FORMAT.md](FORMAT.md) |
+| 单页节选 `init.public.lua` | 保留。完整源码见同目录 `init.lua` |
+| 源码节选、模块索引 | 收录。行号均对应设备原件中的 Lua 文本 |
+
+## 文件结构
+
+`init.bin` 由 24 字节包头和密文正文组成：
+
+```text
+偏移 0    4 字节   固定值 20 18 04 12
+偏移 4    4 字节   整个文件的字节数
+偏移 8    4 字节   压缩流的字节数
+偏移 12   4 字节   Lua 文本的字节数（大端）
+偏移 16   4 字节   全零
+偏移 20   4 字节   Lua 文本的字节数（小端，与偏移 12 相同）
+偏移 24   至文件尾  AES-128-ECB 密文
+```
+
+正文解密后，按偏移 8 声明的长度截取 zlib 压缩流，解压即得 Lua 文本。两份样本的压缩流与 zlib 级别 9 的输出逐字节一致。各字段的取值和原件指纹见 [FORMAT.md](FORMAT.md)。
+
 ## 共有功能
 
 | 模块 | 行为及默认配置 |
@@ -14,10 +44,10 @@
 | `topo` | 设备清单关联宽带账号、光猫入网标识（LOID）、序列号、Wi-Fi 名称及内外网 IP。终端字段包括 MAC、主机名、品牌型号、系统、在线时长和收发流量。默认每日上报完整清单，每小时上报在线设备。 |
 | `http_imei`、`sigcollect` | 默认从明文 HTTP 网址和 Cookie 中匹配名为 `imei` 的 15 位值，纳入终端特征上报。 |
 | `domain_dip` | 设备访问指定智能家居服务后，记录该设备随后 10 秒内访问的其他域名及对应 IP。默认开启，每 4 小时上报。 |
-| `http`、`https`、`rawpkt`、`pcap_dump` | 解析明文 HTTP 请求中的网址、来源页、客户端标识和 Cookie，识别 HTTPS 连接中可见的域名。支持按规则采集、记录和回放报文。 |
+| `http`、`https`、`rawpkt`、`pcap_dump` | 解析明文 HTTP 请求中的网址、来源页、客户端标识和 Cookie，识别 HTTPS 连接中可见的域名。支持按规则采集、记录和回放报文。浙江版 `http` 的说明文字写作 `get dns`，代码解析的字段与上海版相同。 |
 | `hredirect` | 按域名和路径重定向明文 HTTP 请求。默认关闭，规则表为空。 |
 | `pktpolicy`、`appctrl`、`appmlp` | 按设备、应用和时段丢包、中止连接或调整流量优先级。 |
-| `pscan` | 扫描局域网，记录设备地址、开放端口、服务名称及版本，以及扫描工具报告的漏洞。 |
+| `pscan` | 下载改名为 `n01` 的 nmap 扫描局域网，参数含 `-sV`（服务版本识别）。上报设备地址、开放端口、服务名称及版本；扫描脚本输出的结果以 `dev_vuln` 类型上报。默认周期为零。 |
 | `shell`、`hotpatch`、`upgrade` | 在插件权限内执行远端下发的系统命令并返回结果；运行时加载 Lua 模块；更新脚本、识别规则和插件。 |
 
 ## 仅见于上海样本的模块
@@ -45,9 +75,13 @@
 
 ## 文件
 
-| 样本 | 完整 Lua 源码 | `init.bin` 原件 | 模块与原行号 |
-|---|---|---|---|
-| 上海 | [init.lua](samples/shanghai/init.lua) | [init.bin](samples/shanghai/init.bin) | [119 个模块](samples/shanghai/module-index.tsv) |
-| 浙江 | [init.lua](samples/zhejiang/init.lua) | [init.bin](samples/zhejiang/init.bin) | [90 个模块](samples/zhejiang/module-index.tsv) |
+| 样本 | 完整 Lua 源码 | `init.bin` 原件 | 模块与原行号 | 源码节选 |
+|---|---|---|---|---|
+| 上海 | [init.lua](samples/shanghai/init.lua) | [init.bin](samples/shanghai/init.bin) | [119 个模块](samples/shanghai/module-index.tsv) | [27 个功能模块](samples/shanghai/source-excerpts.md) |
+| 浙江 | [init.lua](samples/zhejiang/init.lua) | [init.bin](samples/zhejiang/init.bin) | [90 个模块](samples/zhejiang/module-index.tsv) | [18 个功能模块](samples/zhejiang/source-excerpts.md) |
 
 [文件格式、加密参数与原件指纹](FORMAT.md) · [外部线索的逐项证据](MODULE-NOTES.md)
+
+## 许可
+
+本仓库以 [MIT 许可证](LICENSE) 发布。

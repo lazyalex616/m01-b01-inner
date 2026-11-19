@@ -65,6 +65,18 @@ add_sig(mac, domainip, time, false)  -- add other sig within 10 seconds
 -- L7517
 help = "get http from kernel and send to server",
 period = 0,
+-- <...>
+-- L7538
+http_table.url, next_pos = string.unpack(string.format("c%d", url_len), sbytes, next_pos)
+-- <...>
+-- L7541
+http_table.ref, next_pos = string.unpack(string.format("c%d", ref_len), sbytes, next_pos)
+-- <...>
+-- L7544
+http_table.ua, next_pos = string.unpack(string.format("c%d", ua_len), sbytes, next_pos)
+-- <...>
+-- L7547
+http_table.cookie, next_pos = string.unpack(string.format("c%d", cookie_len), sbytes, next_pos)
 ```
 
 ## `https`
@@ -132,8 +144,27 @@ help = "set appmlp and real time send info to server",
 ## `pscan`
 
 ```lua
+-- L18055
+period = 0,
+-- <...>
+-- L18058
+argv = ' --max-rate 10 -sV -oX ',
+prog = 'n01',
+-- <...>
 -- L18070
 help = "parse n01 result and send to oper_data"
+-- <...>
+-- L18129
+local one = {type = "dev_vuln", mac = mac, ip = ip, script_name = script.id or "", vuln_info = cjson.encode(info)}
+-- <...>
+-- L18145
+service = get_attr(v.kids, "service", {name = true, version = true, product = true})
+-- <...>
+-- L18149
+local one = {type = "pscan_v1", mac = mac, ip = ip, port = portid, proto = port.protocol or "", status = state.state or "", svr = service.name or "", version = service.version or "", product = service.product or ""}
+-- <...>
+-- L18334
+-- download nmap tarball to tmp path
 ```
 
 ## `shell`
@@ -181,17 +212,17 @@ upload_period = 0,
 session_period = 1800,
 -- <...>
 -- L4015
-["<STOCK_SITE_1>"] = {url = {"[?&]code=%u*(%d+)&?"}},
-["<STOCK_SITE_2>"] = {url = {"[?&]code=%u*(%d+)&?"}},
-["<STOCK_SITE_3>"] = {url = {"[?&]q=%u*(%d+)&?"}},
+["gbapi.eastmoney.com"] = {url = {"[?&]code=%u*(%d+)&?"}},
+["ai.10jqka.com.cn"] = {url = {"[?&]code=%u*(%d+)&?"}},
+["www.iwencai.com"] = {url = {"[?&]q=%u*(%d+)&?"}},
 -- <...>
 -- L4019
-["<STOCK_SITE_4>"] = {url = {"[^/]/%u*(%d+)/?"}},
-["<STOCK_SITE_5>"] = {url = {"[^/]/%u*(%d+)/?"}},
+["stockpage.10jqka.com.cn"] = {url = {"[^/]/%u*(%d+)/?"}},
+["xueqiu.com"] = {url = {"[^/]/%u*(%d+)/?"}},
 -- <...>
 -- L4022
-["<STOCK_SITE_6>"] = {ref = {"[^/]/%a*(%d+).html"}},
-["<STOCK_SITE_7>"] = {ref = {"[^/]/%a*(%d+).html"}},
+["quote.eastmoney.com"] = {ref = {"[^/]/%a*(%d+).html"}},
+["myfavor.eastmoney.com"] = {ref = {"[^/]/%a*(%d+).html"}},
 -- <...>
 -- L4076
 tt.stock_code = dtype_value or ""

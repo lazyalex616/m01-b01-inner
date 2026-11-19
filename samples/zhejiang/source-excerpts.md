@@ -59,7 +59,21 @@ add_sig(mac, domainip, time, false)  -- add other sig within 10 seconds
 -- L4428
 help = "get dns from kernel and send to server",
 period = 0,
+-- <...>
+-- L4448
+http_table.url, next_pos = string.unpack(string.format("c%d", url_len), sbytes, next_pos)
+-- <...>
+-- L4451
+http_table.ref, next_pos = string.unpack(string.format("c%d", ref_len), sbytes, next_pos)
+-- <...>
+-- L4454
+http_table.ua, next_pos = string.unpack(string.format("c%d", ua_len), sbytes, next_pos)
+-- <...>
+-- L4457
+http_table.cookie, next_pos = string.unpack(string.format("c%d", cookie_len), sbytes, next_pos)
 ```
+
+浙江版说明文字写作 `get dns`，代码实际解析的是 HTTP 请求的网址、来源页、客户端标识和 Cookie，与上海版一致。
 
 ## `https`
 
@@ -126,8 +140,27 @@ help = "set appmlp and real time send info to server",
 ## `pscan`
 
 ```lua
+-- L11583
+period = 0,
+-- <...>
+-- L11586
+argv = ' --max-rate 10 -sV -oX ',
+prog = 'n01',
+-- <...>
 -- L11598
 help = "parse n01 result and send to oper_data"
+-- <...>
+-- L11657
+local one = {type = "dev_vuln", mac = mac, ip = ip, script_name = script.id or "", vuln_info = cjson.encode(info)}
+-- <...>
+-- L11673
+service = get_attr(v.kids, "service", {name = true, version = true, product = true})
+-- <...>
+-- L11677
+local one = {type = "pscan_v1", mac = mac, ip = ip, port = portid, proto = port.protocol or "", status = state.state or "", svr = service.name or "", version = service.version or "", product = service.product or ""}
+-- <...>
+-- L11859
+-- download nmap tarball to tmp path
 ```
 
 ## `shell`
