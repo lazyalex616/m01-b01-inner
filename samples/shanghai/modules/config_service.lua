@@ -1,0 +1,4 @@
+package.preload[ "config_service" ] = assert( (loadstring or load)(
+"return {\"arch\",\"dns\",\"tuple\",\"sys\",\"svroper\",\"shell\",\"operdata\",\"svrdata\",\"sig\",\"dmpapp\",\"ct\",\"osinfo\",\"sigcollect\",\"http\",\"upgrade\",\"dpinfo\",\"http_rule\",\"devinfo\",\"lanhost\",\"lanhoststats\",\"wanstats\",\"diagnose\",\"hredirect\",\"capi\",\"pscan\",\"rawpkt\",\"hotpatch\",\"topo\",\"mdns\",\"upnp\",\"pktpolicy\",\"wandns\",\"pcap_dump\",\"dhcp\",\"oscloud\",\"pqprobe\",\"dumh\",\"https\",\"postmsg\",\"sec_data\",\"domain_dip\",\"sec_camera\",\"appsig_bin\",\"apprule\",\"xapp\",\"http_imei\",\"appctrl\",\"appuse\",\"appmlp\",\"httpdns\",\"mdns_pcap\",\"quic\",\"pcap_udp\",\"locdata\",\"d2tree\",\"crawler\",\"domcent\",\"termact\",\"coll_domain\",\"xid\",\"onvif\",\"appqos\",\"qcollect\",\"qcalc\",\"qsvr\",\"qrcstats\",\"qblstats\",\"arping\",\"mdppp\",\"immddata\",\"murl\",\"msgenl\",\"connfirst\",\"appcidr\"}\
+"
+, '@'.."./config_service.lua" ) )
