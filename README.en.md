@@ -2,7 +2,13 @@
 
 ![China Telecom ONT Plugin Sample Analysis: m01-b01-inner](assets/banner.en.png)
 
-# `m01-b01-inner`: China Telecom ONT plugin samples from Shanghai and Zhejiang
+# [HIGH RISK] China Telecom preinstalled ONT plugin `m01-b01-inner`: identity-linked device data collection and remote command execution
+
+> [!CAUTION]
+> **Risk level: high**　Confirmed on in-service ONTs in Shanghai and Zhejiang.
+> - **On by default**: reports the full inventory of household devices every day; the Shanghai build reports phone numbers, IMEI, IMSI and coordinates extracted from URLs and cookies every 30 minutes.
+> - **Identity-linked**: every report carries the broadband account and LOID, which map directly to a real-name broadband subscriber.
+> - **Remote execution**: the plugin executes server replies directly; the server can push system commands, load new code and replace the plugin itself.
 
 This is a plugin preinstalled on China Telecom optical network terminals (ONTs, the fibre "modem" in the home). It can collect an inventory of household devices and part of their web activity and report them, and it can run commands sent from a remote server. This repository contains the original `init.bin` files, the complete Lua source and module indexes for two regional samples.
 
