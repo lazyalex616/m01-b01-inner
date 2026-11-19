@@ -45,9 +45,9 @@
 
 ## 文件
 
-| 样本 | 单页源码（公开版） | 对应二进制包 | 模块与原行号 |
+| 样本 | 完整 Lua 源码 | `init.bin` 原件 | 模块与原行号 |
 |---|---|---|---|
-| 上海 | [init.public.lua](samples/shanghai/init.public.lua) | [init.public.bin](samples/shanghai/init.public.bin) | [119 个模块](samples/shanghai/source-index.md) |
-| 浙江 | [init.public.lua](samples/zhejiang/init.public.lua) | [init.public.bin](samples/zhejiang/init.public.bin) | [90 个模块](samples/zhejiang/source-index.md) |
+| 上海 | [init.lua](samples/shanghai/init.lua) | [init.bin](samples/shanghai/init.bin) | [119 个模块](samples/shanghai/module-index.tsv) |
+| 浙江 | [init.lua](samples/zhejiang/init.lua) | [init.bin](samples/zhejiang/init.bin) | [90 个模块](samples/zhejiang/module-index.tsv) |
 
 [文件格式、加密参数与原件指纹](FORMAT.md) · [外部线索的逐项证据](MODULE-NOTES.md)

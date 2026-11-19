@@ -18,19 +18,9 @@
 
 ## 仓库文件
 
-`init.public.bin` 的内容对应同目录的 `init.public.lua`。两者是公开版本；设备原件仅列指纹。单页源码按原包顺序编排，每个模块的收录范围见样本索引。
+| 样本 | 原始二进制 | 完整源码 | 模块及原行号 |
+|---|---|---|---|
+| 上海 | [init.bin](samples/shanghai/init.bin) | [init.lua](samples/shanghai/init.lua) | [module-index.tsv](samples/shanghai/module-index.tsv) |
+| 浙江 | [init.bin](samples/zhejiang/init.bin) | [init.lua](samples/zhejiang/init.lua) | [module-index.tsv](samples/zhejiang/module-index.tsv) |
 
-| 公开包参数 | 取值 |
-|---|---|
-| 内容 | UTF-8，LF，与 `init.public.lua` 逐字节相同 |
-| 压缩 | zlib，级别 9 |
-| 加密 | AES-128-ECB，PKCS#7 填充 |
-| 密钥参数 | 取 ASCII 字符串 `m01-b01-inner/public-v1` 的 SHA-256 摘要前 16 字节 |
-| 文件布局 | 仅含密文，无设备包头 |
-
-**仓库文件 SHA-256**
-
-| 样本 | `init.public.bin` | `init.public.lua` |
-|---|---|---|
-| 上海 | `498ad02c19e099fe3ca2684e03e094e2b35fb0190c77b25963356a8146567f3d` | `289edd596c395c852bc6b3e5b7161ca4f39686b88d4214e4001115006cbb1886` |
-| 浙江 | `e84a030f02e16ffafb510b17f6f8fe091db17b7bf7a695795f8872a9824472c7` | `00d1a918e1771783320ede93d155c730110608656ede6466d65902fae8aa1942` |
+上述文件保持原始字节，校验值与本页设备原件指纹一致。`init.public.lua` 和 `source-excerpts.md` 为辅助节选，模块原行号对应 `init.lua`。

@@ -1,2 +1,2 @@
-init.public.lua -text
-init.public.bin binary
+*.lua -text
+*.bin binary
