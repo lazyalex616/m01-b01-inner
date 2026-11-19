@@ -43,4 +43,11 @@
 | SMB 握手数据的用途 | 上海样本将匹配报文交给设备特征模块。服务端用途未知。 |
 | 按地区下发不同策略 | 缺少同版本的跨地区下发记录。新疆、西藏暂无可供核对的样本。 |
 
-样本目录：[上海](samples/shanghai/) · [浙江](samples/zhejiang/)。目录内列有模块索引、完整收录的模块及其余功能的源码节选。
+## 文件
+
+| 样本 | 单页源码（公开版） | 对应二进制包 | 模块与原行号 |
+|---|---|---|---|
+| 上海 | [init.public.lua](samples/shanghai/init.public.lua) | [init.public.bin](samples/shanghai/init.public.bin) | [119 个模块](samples/shanghai/source-index.md) |
+| 浙江 | [init.public.lua](samples/zhejiang/init.public.lua) | [init.public.bin](samples/zhejiang/init.public.bin) | [90 个模块](samples/zhejiang/source-index.md) |
+
+[文件格式、加密参数与原件指纹](FORMAT.md) · [外部线索的逐项证据](MODULE-NOTES.md)
