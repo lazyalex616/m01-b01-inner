@@ -466,6 +466,35 @@ collect_period = 0,
 
 </details>
 
+## Where the data goes
+
+| Server | What is reported | Modules | Default period | Where the address is set |
+|---|---|---|---|---|
+| `b01-data-reported.189cube.com:7890` | Main data: household device topology and inventory; in the Shanghai build also phone numbers, IMEI, IMSI, advertising IDs and coordinates matched by `xid` | `topo`, `xid`, sent through `svrdata` | 30 minutes | Platform-pushed config; send calls at Shanghai [L29360](samples/shanghai/init.lua#L29360), [L30915](samples/shanghai/init.lua#L30915) |
+| `b01.189cube.com:7870` | Operations channel: heartbeat, command results, raw packets; Shanghai `coll_domain` stock codes and domain statistics | `svroper`, `operdata`, `rawpkt`, `coll_domain` | Heartbeat 2 h, raw packets 10 min; `coll_domain` off by default | Plugin's bundled config; `coll_domain` at Shanghai [L4009](samples/shanghai/init.lua#L4009) |
+| `term.189cube.com:7870` | Per-device fingerprint: IMEI, MAC, hostname, model and more | `sigcollect` | 4 h, new devices within 10 min | Shanghai [L22485](samples/shanghai/init.lua#L22485), Zhejiang [L12877](samples/zhejiang/init.lua#L12877) |
+| `message.189cube.com:9890` | App usage statistics, application control | `appctrl`, `appuse`, `appmlp` | Per config | Shanghai [L782](samples/shanghai/init.lua#L782), Zhejiang [L24](samples/zhejiang/init.lua#L24) |
+| `xapp.189cube.com:7870/7871/7872` | Application features, security data; page content fetched by Shanghai `crawler` | `sec_data`, `xapp`, `crawler`; Zhejiang `appinfo` | Per config | Shanghai [L22095](samples/shanghai/init.lua#L22095), [L4387](samples/shanghai/init.lua#L4387), Zhejiang [L12487](samples/zhejiang/init.lua#L12487), [L325](samples/zhejiang/init.lua#L325) |
+| `mk-collect.189smarthome.com:7890` | Camera and LAN security data | `sec_camera` | Off by default | Shanghai [L22028](samples/shanghai/init.lua#L22028), Zhejiang [L12420](samples/zhejiang/init.lua#L12420) |
+| `101.89.180.237:7890` | Receives no reports; download source of the `n01` scanner used by `pscan` | `pscan` | On demand | Shanghai [L18057](samples/shanghai/init.lua#L18057), Zhejiang [L11585](samples/zhejiang/init.lua#L11585) |
+
+The addresses and periods in the first two rows are set in the plugin's bundled config file and in platform-pushed config, not in `init.lua`. Neither config is included in this repository.
+
+Every report carries the ONT's identity (Shanghai [L25810](samples/shanghai/init.lua#L25810), Zhejiang [L15885](samples/zhejiang/init.lua#L15885)):
+
+```text
+{"data":%s,"sn":"%s","oui":"%s","int_ver":"%s","ad":"%s","loid":"%s","ipv4":"%s"}
+```
+
+`sn` is the ONT serial number, `ad` the broadband (PPPoE) account and `loid` the broadband registration ID; one LOID maps to one real-name broadband subscription.
+
+### Stock codes (Shanghai `coll_domain`)
+
+- Matches 7 Eastmoney, 10jqka, iwencai and Xueqiu domains in plaintext HTTP URLs and referrers with built-in rules and extracts stock codes ([L4013-L4024](samples/shanghai/init.lua#L4013-L4024), [L4137-L4161](samples/shanghai/init.lua#L4137-L4161)).
+- Each record holds device MAC, domain, stock code, page views, minutes spent, session count, and first and last visit time ([L4062-L4076](samples/shanghai/init.lua#L4062-L4076)); visited domains and referrers are also counted per device.
+- Sent to `b01.189cube.com:7870` ([L4009](samples/shanghai/init.lua#L4009), [L4087](samples/shanghai/init.lua#L4087)) together with the ONT identity above.
+- The default upload period is zero, i.e. off ([L4010](samples/shanghai/init.lua#L4010)). The server can switch it on and replace the rules by pushing config. The Zhejiang build has no such module.
+
 ## Checks of outside claims
 
 | Claim | Result |

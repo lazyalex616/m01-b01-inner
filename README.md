@@ -466,6 +466,35 @@ collect_period = 0,
 
 </details>
 
+## 上报去向
+
+| 服务器 | 上报内容 | 模块 | 默认周期 | 地址所在位置 |
+|---|---|---|---|---|
+| `b01-data-reported.189cube.com:7890` | 主数据：家庭设备拓扑与设备清单；上海版另有 `xid` 匹配出的手机号、IMEI、IMSI、广告标识、经纬度 | `topo`、`xid`，经 `svrdata` 发送 | 30 分钟 | 平台下发配置；发送入口见上海 [L29360](samples/shanghai/init.lua#L29360)、[L30915](samples/shanghai/init.lua#L30915) |
+| `b01.189cube.com:7870` | 运维通道：心跳、命令执行结果、原始报文；上海版 `coll_domain` 的股票代码与域名统计 | `svroper`、`operdata`、`rawpkt`、`coll_domain` | 心跳 2 小时，原始报文 10 分钟；`coll_domain` 默认关闭 | 插件自带配置；`coll_domain` 见上海 [L4009](samples/shanghai/init.lua#L4009) |
+| `term.189cube.com:7870` | 每台设备的特征：IMEI、MAC、主机名、型号等 | `sigcollect` | 4 小时，新设备 10 分钟 | 上海 [L22485](samples/shanghai/init.lua#L22485)，浙江 [L12877](samples/zhejiang/init.lua#L12877) |
+| `message.189cube.com:9890` | App 使用统计、应用控制 | `appctrl`、`appuse`、`appmlp` | 按配置 | 上海 [L782](samples/shanghai/init.lua#L782)，浙江 [L24](samples/zhejiang/init.lua#L24) |
+| `xapp.189cube.com:7870/7871/7872` | 应用特征、安全数据；上海版 `crawler` 代抓回传的网页内容 | `sec_data`、`xapp`、`crawler`；浙江 `appinfo` | 按配置 | 上海 [L22095](samples/shanghai/init.lua#L22095)、[L4387](samples/shanghai/init.lua#L4387)，浙江 [L12487](samples/zhejiang/init.lua#L12487)、[L325](samples/zhejiang/init.lua#L325) |
+| `mk-collect.189smarthome.com:7890` | 摄像头与局域网安全数据 | `sec_camera` | 默认关闭 | 上海 [L22028](samples/shanghai/init.lua#L22028)，浙江 [L12420](samples/zhejiang/init.lua#L12420) |
+| `101.89.180.237:7890` | 不接收上报，是 `pscan` 下载扫描器 `n01` 的来源 | `pscan` | 按需 | 上海 [L18057](samples/shanghai/init.lua#L18057)，浙江 [L11585](samples/zhejiang/init.lua#L11585) |
+
+前两行的地址和周期写在插件自带的配置文件和平台下发的配置里，不在 `init.lua` 中，这两份配置未收录于本仓库。
+
+每条上报都附带光猫身份（上海 [L25810](samples/shanghai/init.lua#L25810)，浙江 [L15885](samples/zhejiang/init.lua#L15885)）：
+
+```text
+{"data":%s,"sn":"%s","oui":"%s","int_ver":"%s","ad":"%s","loid":"%s","ipv4":"%s"}
+```
+
+`sn` 是光猫序列号，`ad` 是宽带拨号账号，`loid` 是宽带注册码，一个 LOID 对应一个实名宽带账户。
+
+### 股票代码（上海版 `coll_domain`）
+
+- 从明文 HTTP 的网址和来源页中，按内置规则匹配东方财富、同花顺、问财、雪球 7 个域名，提取股票代码（[L4013-L4024](samples/shanghai/init.lua#L4013-L4024)、[L4137-L4161](samples/shanghai/init.lua#L4137-L4161)）。
+- 每条记录含设备 MAC、域名、股票代码、访问次数、停留分钟数、会话数、首次和最后访问时间（[L4062-L4076](samples/shanghai/init.lua#L4062-L4076)），同时按设备统计访问过的域名和来源页。
+- 发往 `b01.189cube.com:7870`（[L4009](samples/shanghai/init.lua#L4009)、[L4087](samples/shanghai/init.lua#L4087)），并附带上面的光猫身份。
+- 默认上报周期为零，即关闭（[L4010](samples/shanghai/init.lua#L4010)）。服务器可下发配置开启，并替换匹配规则。浙江版没有这个模块。
+
 ## 外部线索核对
 
 | 线索 | 核对结果 |
