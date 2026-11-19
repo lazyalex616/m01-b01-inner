@@ -495,6 +495,24 @@ Every report carries the ONT's identity (Shanghai [L25810](samples/shanghai/init
 - Sent to `b01.189cube.com:7870` ([L4009](samples/shanghai/init.lua#L4009), [L4087](samples/shanghai/init.lua#L4087)) together with the ONT identity above.
 - The default upload period is zero, i.e. off ([L4010](samples/shanghai/init.lua#L4010)). The server can switch it on and replace the rules by pushing config. The Zhejiang build has no such module.
 
+**Do these domains still accept plaintext HTTP?**
+
+The rules only work on plaintext HTTP; over HTTPS the plugin sees only the domain, not the stock code in the URL.
+
+| Domain | Rule matches | Plaintext HTTP result | Conclusion |
+|---|---|---|---|
+| `gbapi.eastmoney.com` | URL parameter `code=` | 403, no redirect | Still accepts plaintext HTTP |
+| `ai.10jqka.com.cn` | URL parameter `code=` | 404, no redirect | Still accepts plaintext HTTP |
+| `myfavor.eastmoney.com` | Referrer | 404, no redirect | Still accepts plaintext HTTP |
+| `stockpage.10jqka.com.cn` | URL path | Home page 200, then a page script rewrites the address to `https`; stock page 403, no redirect | Home page redirects by script; stock page still accepts plaintext |
+| `xueqiu.com` | URL path | Home page 301 to HTTPS; stock page 200 with a firewall challenge page | Home page redirects; stock page inconclusive |
+| `www.iwencai.com` | URL parameter `q=` | 301 to HTTPS | Redirects to HTTPS |
+| `quote.eastmoney.com` | Referrer | 302 to HTTPS | Redirects to HTTPS |
+
+- Tested on 2026-11-19 from a home broadband line without proxy, sending a plain `curl` GET without browser headers to each domain; stock pages used 600519 as the example.
+- The results only show whether a domain still accepts plaintext requests, not whether its web pages or apps actually use HTTP.
+- A redirect to HTTPS does not protect the first request: before the redirect happens, the plaintext URL carrying the stock code has already passed through the ONT.
+
 ## Checks of outside claims
 
 | Claim | Result |

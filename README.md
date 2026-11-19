@@ -495,6 +495,24 @@ collect_period = 0,
 - 发往 `b01.189cube.com:7870`（[L4009](samples/shanghai/init.lua#L4009)、[L4087](samples/shanghai/init.lua#L4087)），并附带上面的光猫身份。
 - 默认上报周期为零，即关闭（[L4010](samples/shanghai/init.lua#L4010)）。服务器可下发配置开启，并替换匹配规则。浙江版没有这个模块。
 
+**这些域名是否还接受明文 HTTP**
+
+规则只对明文 HTTP 生效；走 HTTPS 时插件只能看到域名，看不到网址里的股票代码。
+
+| 域名 | 规则匹配位置 | 明文 HTTP 请求结果 | 结论 |
+|---|---|---|---|
+| `gbapi.eastmoney.com` | 网址参数 `code=` | 403，不跳转 | 仍接受明文 HTTP |
+| `ai.10jqka.com.cn` | 网址参数 `code=` | 404，不跳转 | 仍接受明文 HTTP |
+| `myfavor.eastmoney.com` | 来源页 | 404，不跳转 | 仍接受明文 HTTP |
+| `stockpage.10jqka.com.cn` | 网址路径 | 首页 200，页面脚本再把地址换成 `https`；个股页 403，不跳转 | 首页靠脚本跳转，个股页仍接受明文 |
+| `xueqiu.com` | 网址路径 | 首页 301 跳转 HTTPS；个股页 200，返回防火墙验证页 | 首页跳转，个股页无法判定 |
+| `www.iwencai.com` | 网址参数 `q=` | 301 跳转 HTTPS | 跳转 HTTPS |
+| `quote.eastmoney.com` | 来源页 | 302 跳转 HTTPS | 跳转 HTTPS |
+
+- 测试于 2026-11-19，从家庭宽带直连，用 `curl` 对每个域名发送不带浏览器特征的明文 GET 请求，个股页以 600519 为例。
+- 结果只说明这些域名还接不接受明文请求，不代表网页或 App 实际使用 HTTP。
+- 跳转到 HTTPS 也挡不住第一次请求：跳转发生之前，带股票代码的明文网址已经经过光猫。
+
 ## 外部线索核对
 
 | 线索 | 核对结果 |
