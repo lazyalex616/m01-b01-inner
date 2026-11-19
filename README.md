@@ -54,7 +54,7 @@
 
 以下为各模块的关键源码。摘要行给出模块在完整源码中的位置；代码块里的行号对应上海样本 `init.lua`，另有标注的除外。
 
-<details open>
+<details>
 <summary><code>topo</code> · 上海 <a href="samples/shanghai/init.lua#L28283-L29513">L28283-L29513</a> · 浙江 <a href="samples/zhejiang/init.lua#L17635-L18826">L17635-L18826</a></summary>
 
 ```lua
@@ -81,7 +81,7 @@ info.ip = laninfo.ip
 
 </details>
 
-<details open>
+<details>
 <summary><code>http_imei</code> · 上海 <a href="samples/shanghai/init.lua#L7670-L7866">L7670-L7866</a> · 浙江 <a href="samples/zhejiang/init.lua#L4562-L4758">L4562-L4758</a></summary>
 
 ```lua
@@ -94,7 +94,7 @@ attr = {"url", "cookie"},
 
 </details>
 
-<details open>
+<details>
 <summary><code>sigcollect</code> · 上海 <a href="samples/shanghai/init.lua#L22455-L22916">L22455-L22916</a> · 浙江 <a href="samples/zhejiang/init.lua#L12847-L13258">L12847-L13258</a></summary>
 
 ```lua
@@ -110,7 +110,7 @@ coll_type = {"term_http","hostname","elink","mdns","upnp","vendor","dhcp_hostnam
 
 </details>
 
-<details open>
+<details>
 <summary><code>domain_dip</code> · 上海 <a href="samples/shanghai/init.lua#L6606-L6818">L6606-L6818</a> · 浙江 <a href="samples/zhejiang/init.lua#L3717-L3929">L3717-L3929</a></summary>
 
 ```lua
@@ -123,7 +123,7 @@ add_sig(mac, domainip, time, false)  -- add other sig within 10 seconds
 
 </details>
 
-<details open>
+<details>
 <summary><code>http</code> · 上海 <a href="samples/shanghai/init.lua#L7506-L7668">L7506-L7668</a> · 浙江 <a href="samples/zhejiang/init.lua#L4417-L4560">L4417-L4560</a></summary>
 
 上海样本：
@@ -167,7 +167,7 @@ http_table.cookie, next_pos = string.unpack(string.format("c%d", cookie_len), sb
 
 </details>
 
-<details open>
+<details>
 <summary><code>https</code> · 上海 <a href="samples/shanghai/init.lua#L9335-L9426">L9335-L9426</a> · 浙江 <a href="samples/zhejiang/init.lua#L5730-L5816">L5730-L5816</a></summary>
 
 ```lua
@@ -183,7 +183,7 @@ domain = svrname,
 
 </details>
 
-<details open>
+<details>
 <summary><code>rawpkt</code> · 上海 <a href="samples/shanghai/init.lua#L21501-L21947">L21501-L21947</a> · 浙江 <a href="samples/zhejiang/init.lua#L11970-L12407">L11970-L12407</a></summary>
 
 ```lua
@@ -196,7 +196,7 @@ conn_limit_pkts = 16, -- max pkts in one conn(tuple), 0 means no limit
 
 </details>
 
-<details open>
+<details>
 <summary><code>pcap_dump</code> · 上海 <a href="samples/shanghai/init.lua#L16553-L16676">L16553-L16676</a> · 浙江 <a href="samples/zhejiang/init.lua#L10318-L10339">L10318-L10339</a></summary>
 
 ```lua
@@ -206,7 +206,7 @@ help = "read/write/stat/replay pcap",
 
 </details>
 
-<details open>
+<details>
 <summary><code>hredirect</code> · 上海 <a href="samples/shanghai/init.lua#L7365-L7504">L7365-L7504</a> · 浙江 <a href="samples/zhejiang/init.lua#L4286-L4415">L4286-L4415</a></summary>
 
 ```lua
@@ -220,7 +220,7 @@ rules = {},
 
 </details>
 
-<details open>
+<details>
 <summary><code>pktpolicy</code> · 上海 <a href="samples/shanghai/init.lua#L16770-L17284">L16770-L17284</a> · 浙江 <a href="samples/zhejiang/init.lua#L10341-L10822">L10341-L10822</a></summary>
 
 ```lua
@@ -233,7 +233,7 @@ enable = true,
 
 </details>
 
-<details open>
+<details>
 <summary><code>appctrl</code> · 上海 <a href="samples/shanghai/init.lua#L761-L1046">L761-L1046</a> · 浙江 <a href="samples/zhejiang/init.lua#L3-L272">L3-L272</a></summary>
 
 ```lua
@@ -243,7 +243,7 @@ help = "set appctrl and send info to server",
 
 </details>
 
-<details open>
+<details>
 <summary><code>appmlp</code> · 上海 <a href="samples/shanghai/init.lua#L1048-L1350">L1048-L1350</a> · 浙江 <a href="samples/zhejiang/init.lua#L730-L1032">L730-L1032</a></summary>
 
 ```lua
@@ -253,7 +253,7 @@ help = "set appmlp and real time send info to server",
 
 </details>
 
-<details open>
+<details>
 <summary><code>pscan</code> · 上海 <a href="samples/shanghai/init.lua#L18040-L18443">L18040-L18443</a> · 浙江 <a href="samples/zhejiang/init.lua#L11568-L11968">L11568-L11968</a></summary>
 
 ```lua
@@ -282,7 +282,7 @@ local one = {type = "pscan_v1", mac = mac, ip = ip, port = portid, proto = port.
 
 </details>
 
-<details open>
+<details>
 <summary><code>shell</code> · 上海 <a href="samples/shanghai/init.lua#L22300-L22337">L22300-L22337</a> · 浙江 <a href="samples/zhejiang/init.lua#L12692-L12729">L12692-L12729</a></summary>
 
 ```lua
@@ -292,7 +292,7 @@ help = "run shell cmd and return result",
 
 </details>
 
-<details open>
+<details>
 <summary><code>hotpatch</code> · 上海 <a href="samples/shanghai/init.lua#L7212-L7363">L7212-L7363</a> · 浙江 <a href="samples/zhejiang/init.lua#L4142-L4284">L4142-L4284</a></summary>
 
 ```lua
@@ -302,7 +302,7 @@ help = "hot fixbug, and hot add more function",
 
 </details>
 
-<details open>
+<details>
 <summary><code>upgrade</code> · 上海 <a href="samples/shanghai/init.lua#L29710-L29818">L29710-L29818</a> · 浙江 <a href="samples/zhejiang/init.lua#L19003-L19111">L19003-L19111</a></summary>
 
 ```lua
@@ -324,7 +324,7 @@ help = "upgrade for plugin/lua/sig",
 | `xapp`、`quic`、`httpdns` | `xapp` 可记录网址、Cookie、来源页和部分报文内容，相关流量上报默认关闭。`quic` 识别部分 HTTP/3 连接中的域名；`httpdns` 记录特定域名解析服务返回的结果。 |
 | `qrcstats` | 扫描附近的 Wi-Fi 网络。默认采集周期为零。 |
 
-<details open>
+<details>
 <summary><code>xid</code> · 上海 <a href="samples/shanghai/init.lua#L30826-L31050">L30826-L31050</a></summary>
 
 ```lua
@@ -340,7 +340,7 @@ attr = {"url", "ref", "cookie"},
 
 </details>
 
-<details open>
+<details>
 <summary><code>coll_domain</code> · 上海 <a href="samples/shanghai/init.lua#L3989-L4255">L3989-L4255</a></summary>
 
 ```lua
@@ -370,7 +370,7 @@ tt.stock_code = dtype_value or ""
 
 </details>
 
-<details open>
+<details>
 <summary><code>crawler</code> · 上海 <a href="samples/shanghai/init.lua#L4363-L4696">L4363-L4696</a></summary>
 
 ```lua
@@ -383,7 +383,7 @@ max_crawl_cnt = 30,     -- maximum number of climbs
 
 </details>
 
-<details open>
+<details>
 <summary><code>onvif</code> · 上海 <a href="samples/shanghai/init.lua#L14832-L15356">L14832-L15356</a></summary>
 
 ```lua
@@ -394,7 +394,7 @@ period = 0, -- default close
 
 </details>
 
-<details open>
+<details>
 <summary><code>termact</code> · 上海 <a href="samples/shanghai/init.lua#L27881-L28148">L27881-L28148</a></summary>
 
 ```lua
@@ -410,7 +410,7 @@ enable = false,
 
 </details>
 
-<details open>
+<details>
 <summary><code>xapp</code> · 上海 <a href="samples/shanghai/init.lua#L30239-L30824">L30239-L30824</a></summary>
 
 ```lua
@@ -424,7 +424,7 @@ tag_enable = false,         -- 是否采集标签特征数据，默认关闭
 
 </details>
 
-<details open>
+<details>
 <summary><code>quic</code> · 上海 <a href="samples/shanghai/init.lua#L20814-L21499">L20814-L21499</a></summary>
 
 ```lua
@@ -437,7 +437,7 @@ upload_mode = "none", -- "none", "svrdata", "operdata", "all"
 
 </details>
 
-<details open>
+<details>
 <summary><code>httpdns</code> · 上海 <a href="samples/shanghai/init.lua#L8844-L9333">L8844-L9333</a></summary>
 
 ```lua
@@ -453,7 +453,7 @@ upload_enable = false,
 
 </details>
 
-<details open>
+<details>
 <summary><code>qrcstats</code> · 上海 <a href="samples/shanghai/init.lua#L19840-L20476">L19840-L20476</a></summary>
 
 ```lua
